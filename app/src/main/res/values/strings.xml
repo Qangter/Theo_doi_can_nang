@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Theo dõi cân nặng</string>
+
+    <!-- Màn hình thêm / sửa -->
+    <string name="add_weight">Thêm cân nặng</string>
+    <string name="date">Ngày</string>
+    <string name="date_hint">dd/MM/yyyy</string>
+
+    <string name="weight_kg">Cân nặng (kg)</string>
+    <string name="weight_hint">Ví dụ: 65.5</string>
+
+    <string name="note">Ghi chú</string>
+    <string name="note_hint">Ví dụ: Sau khi tập thể dục</string>
+
+    <string name="save">Lưu</string>
+    <string name="cancel">Hủy</string>
+
+</resources>

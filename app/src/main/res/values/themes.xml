@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style
+        name="Base.Theme.Theo_doi_can_nang"
+        parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Customize your light theme here. -->
+
+    </style>
+
+    <style
+        name="Theme.Theo_doi_can_nang"
+        parent="Base.Theme.Theo_doi_can_nang" />
+
+</resources>
