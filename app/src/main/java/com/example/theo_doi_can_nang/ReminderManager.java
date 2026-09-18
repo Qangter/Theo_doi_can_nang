@@ -4,17 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 
 import java.util.Calendar;
 
 public class ReminderManager {
 
     private static final int REQUEST_CODE = 2001;
-
-
-    // =========================================================
-    // Đặt lịch nhắc
-    // =========================================================
 
     public static void setReminder(
             Context context,
@@ -25,6 +22,10 @@ public class ReminderManager {
                 (AlarmManager) context.getSystemService(
                         Context.ALARM_SERVICE
                 );
+
+        if (alarmManager == null) {
+            return;
+        }
 
         Intent intent =
                 new Intent(
@@ -40,11 +41,6 @@ public class ReminderManager {
                         PendingIntent.FLAG_UPDATE_CURRENT |
                                 PendingIntent.FLAG_IMMUTABLE
                 );
-
-
-        // =====================================================
-        // Thời gian nhắc tiếp theo
-        // =====================================================
 
         Calendar calendar =
                 Calendar.getInstance();
@@ -69,10 +65,7 @@ public class ReminderManager {
                 0
         );
 
-
-        // Nếu giờ hôm nay đã qua
-        // thì chuyển sang ngày mai
-
+        // Nếu giờ hôm nay đã qua thì đặt sang ngày mai
         if (calendar.getTimeInMillis()
                 <= System.currentTimeMillis()) {
 
@@ -82,26 +75,43 @@ public class ReminderManager {
             );
         }
 
+        long triggerTime =
+                calendar.getTimeInMillis();
 
-        // =====================================================
-        // Đặt Alarm
-        // =====================================================
+        /*
+         * Android 12 trở lên:
+         * Nếu được phép dùng exact alarm thì
+         * sử dụng setExactAndAllowWhileIdle().
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
-        if (alarmManager != null) {
+            if (alarmManager.canScheduleExactAlarms()) {
 
-            alarmManager.setInexactRepeating(
+                alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        triggerTime,
+                        pendingIntent
+                );
+
+            } else {
+
+                // Chưa có quyền exact alarm
+                alarmManager.setAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        triggerTime,
+                        pendingIntent
+                );
+            }
+
+        } else {
+
+            alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY,
+                    triggerTime,
                     pendingIntent
             );
         }
     }
-
-
-    // =========================================================
-    // Hủy lịch nhắc
-    // =========================================================
 
     public static void cancelReminder(
             Context context) {
@@ -127,12 +137,26 @@ public class ReminderManager {
                 );
 
         if (alarmManager != null) {
-
-            alarmManager.cancel(
-                    pendingIntent
-            );
+            alarmManager.cancel(pendingIntent);
         }
 
         pendingIntent.cancel();
+    }
+
+    public static boolean canScheduleExactAlarm(
+            Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+            AlarmManager alarmManager =
+                    (AlarmManager) context.getSystemService(
+                            Context.ALARM_SERVICE
+                    );
+
+            return alarmManager != null &&
+                    alarmManager.canScheduleExactAlarms();
+        }
+
+        return true;
     }
 }

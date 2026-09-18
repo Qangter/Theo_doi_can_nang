@@ -1,8 +1,11 @@
 package com.example.theo_doi_can_nang;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -45,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         // ===============================
-        // Ánh xạ các View
+        // ÁNH XẠ VIEW
         // ===============================
 
         edtHeight =
@@ -85,13 +88,13 @@ public class SettingsActivity extends AppCompatActivity {
                 findViewById(R.id.switchDarkMode);
 
         // ===============================
-        // Đọc cài đặt đã lưu
+        // ĐỌC CÀI ĐẶT
         // ===============================
 
         getSavedSettings();
 
         // ===============================
-        // Thay đổi đơn vị kg / lbs
+        // ĐỔI KG / LBS
         // ===============================
 
         radioUnit.setOnCheckedChangeListener(
@@ -137,7 +140,7 @@ public class SettingsActivity extends AppCompatActivity {
         );
 
         // ===============================
-        // Chọn giờ nhắc
+        // CHỌN GIỜ NHẮC
         // ===============================
 
         btnReminderTime.setOnClickListener(
@@ -145,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity {
         );
 
         // ===============================
-        // Lưu cài đặt
+        // LƯU
         // ===============================
 
         btnSaveSettings.setOnClickListener(
@@ -166,7 +169,7 @@ public class SettingsActivity extends AppCompatActivity {
                 );
 
         // ===============================
-        // Chiều cao
+        // CHIỀU CAO
         // ===============================
 
         float height =
@@ -183,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         // ===============================
-        // Cân nặng ban đầu
+        // CÂN NẶNG BAN ĐẦU
         // ===============================
 
         float startWeightKg =
@@ -193,7 +196,7 @@ public class SettingsActivity extends AppCompatActivity {
                 );
 
         // ===============================
-        // Cân nặng mục tiêu
+        // CÂN NẶNG MỤC TIÊU
         // ===============================
 
         float goalWeightKg =
@@ -203,7 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
                 );
 
         // ===============================
-        // Đơn vị
+        // ĐƠN VỊ
         // ===============================
 
         String unit =
@@ -251,24 +254,20 @@ public class SettingsActivity extends AppCompatActivity {
             if (startWeightKg > 0) {
 
                 edtStartWeight.setText(
-                        String.valueOf(
-                                startWeightKg
-                        )
+                        String.valueOf(startWeightKg)
                 );
             }
 
             if (goalWeightKg > 0) {
 
                 edtGoalWeight.setText(
-                        String.valueOf(
-                                goalWeightKg
-                        )
+                        String.valueOf(goalWeightKg)
                 );
             }
         }
 
         // ===============================
-        // Giờ nhắc
+        // GIỜ NHẮC
         // ===============================
 
         reminderHour =
@@ -286,7 +285,7 @@ public class SettingsActivity extends AppCompatActivity {
         updateReminderTimeText();
 
         // ===============================
-        // Trạng thái nhắc nhở
+        // TRẠNG THÁI NHẮC NHỞ
         // ===============================
 
         boolean reminderEnabled =
@@ -300,7 +299,7 @@ public class SettingsActivity extends AppCompatActivity {
         );
 
         // ===============================
-        // Trạng thái Dark Mode
+        // DARK MODE
         // ===============================
 
         boolean darkMode =
@@ -380,7 +379,7 @@ public class SettingsActivity extends AppCompatActivity {
                         .trim();
 
         // ===============================
-        // Kiểm tra dữ liệu rỗng
+        // KIỂM TRA RỖNG
         // ===============================
 
         if (heightText.isEmpty()) {
@@ -437,7 +436,7 @@ public class SettingsActivity extends AppCompatActivity {
                     );
 
             // ===============================
-            // Kiểm tra giá trị
+            // KIỂM TRA GIÁ TRỊ
             // ===============================
 
             if (height <= 0) {
@@ -468,7 +467,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             // ===============================
-            // Xác định đơn vị
+            // XÁC ĐỊNH ĐƠN VỊ
             // ===============================
 
             String unit;
@@ -483,7 +482,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             // ===============================
-            // Chuyển về kg để lưu
+            // CHUYỂN VỀ KG
             // ===============================
 
             float startWeightKg =
@@ -502,21 +501,21 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             // ===============================
-            // Dark Mode
+            // DARK MODE
             // ===============================
 
             boolean darkMode =
                     switchDarkMode.isChecked();
 
             // ===============================
-            // Nhắc nhở
+            // NHẮC NHỞ
             // ===============================
 
             boolean reminderEnabled =
                     switchReminder.isChecked();
 
             // ===============================
-            // Lưu SharedPreferences
+            // LƯU SHAREDPREFERENCES
             // ===============================
 
             SharedPreferences prefs =
@@ -561,7 +560,7 @@ public class SettingsActivity extends AppCompatActivity {
                     .apply();
 
             // ===============================
-            // Áp dụng Dark Mode
+            // DARK MODE
             // ===============================
 
             if (darkMode) {
@@ -578,28 +577,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             // ===============================
-            // Cài đặt nhắc nhở
+            // XỬ LÝ NHẮC NHỞ
             // ===============================
 
             if (reminderEnabled) {
 
-                ReminderManager.setReminder(
-                        this,
-                        reminderHour,
-                        reminderMinute
-                );
-
-                Toast.makeText(
-                        this,
-                        "Đã bật nhắc nhở lúc " +
-                                String.format(
-                                        Locale.getDefault(),
-                                        "%02d:%02d",
-                                        reminderHour,
-                                        reminderMinute
-                                ),
-                        Toast.LENGTH_SHORT
-                ).show();
+                setupReminder();
 
             } else {
 
@@ -612,9 +595,9 @@ public class SettingsActivity extends AppCompatActivity {
                         "Đã tắt nhắc nhở",
                         Toast.LENGTH_SHORT
                 ).show();
-            }
 
-            finish();
+                finish();
+            }
 
         } catch (NumberFormatException e) {
 
@@ -627,7 +610,73 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     // =========================================================
-    // CHUYỂN lbs -> kg
+    // THIẾT LẬP REMINDER
+    // =========================================================
+
+    private void setupReminder() {
+
+        // Android 12 trở lên
+        if (Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.S) {
+
+            if (!ReminderManager.canScheduleExactAlarm(
+                    this)) {
+
+                Toast.makeText(
+                        this,
+                        "Cần cấp quyền Báo thức và lời nhắc",
+                        Toast.LENGTH_LONG
+                ).show();
+
+                try {
+
+                    Intent intent =
+                            new Intent(
+                                    Settings
+                                            .ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+                            );
+
+                    startActivity(intent);
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+
+                    Toast.makeText(
+                            this,
+                            "Không thể mở cài đặt quyền báo thức",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+
+                return;
+            }
+        }
+
+        // Đã có quyền → đặt alarm
+        ReminderManager.setReminder(
+                this,
+                reminderHour,
+                reminderMinute
+        );
+
+        Toast.makeText(
+                this,
+                "Đã bật nhắc nhở lúc " +
+                        String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d",
+                                reminderHour,
+                                reminderMinute
+                        ),
+                Toast.LENGTH_SHORT
+        ).show();
+
+        finish();
+    }
+
+    // =========================================================
+    // lbs -> kg
     // =========================================================
 
     private float lbsToKg(float lbs) {
@@ -636,7 +685,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     // =========================================================
-    // CHUYỂN kg -> lbs
+    // kg -> lbs
     // =========================================================
 
     private float kgToLbs(float kg) {
