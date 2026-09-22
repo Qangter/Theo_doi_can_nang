@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Màu giao diện chung -->
-    <color name="app_background">#F5F7FA</color>
+    <!-- Background -->
+    <color name="app_background">#F6F5FA</color>
+
+    <!-- Card -->
     <color name="app_card">#FFFFFF</color>
+    <color name="app_card_border">#E8E5EF</color>
 
-    <!-- Chữ -->
+    <!-- Text -->
     <color name="app_text">#202124</color>
-    <color name="app_secondary_text">#5F6368</color>
+    <color name="app_secondary_text">#707078</color>
+    <color name="white">#FFFFFF</color>
 
-    <!-- Đường phân cách -->
-    <color name="app_divider">#DADCE0</color>
+    <!-- Primary -->
+    <color name="app_primary">#6F4DB5</color>
+    <color name="app_primary_dark">#593B99</color>
+    <color name="app_primary_light">#F0EBFA</color>
+
+
+    <!-- Input -->
+    <color name="app_input_background">#FAF9FC</color>
+
+    <!-- Divider -->
+    <color name="app_divider">#E3E0E8</color>
 
 </resources>

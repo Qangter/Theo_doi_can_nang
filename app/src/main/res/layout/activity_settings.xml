@@ -4,50 +4,78 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:background="@color/app_background"
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="18dp"
+        android:paddingTop="22dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="30dp">
 
-        <!-- ========================================= -->
-        <!-- Tiêu đề -->
-        <!-- ========================================= -->
+        <!-- ================= HEADER ================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cài đặt"
+            android:textColor="@color/app_text"
             android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
-
-        <!-- ========================================= -->
-        <!-- Chiều cao -->
-        <!-- ========================================= -->
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Chiều cao (cm)"
-            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:text="Quản lý thông tin và tùy chọn ứng dụng"
+            android:textColor="@color/app_secondary_text"
+            android:textSize="14sp" />
+
+
+        <!-- ================= PERSONAL INFO ================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="THÔNG TIN CÁ NHÂN"
+            android:textColor="@color/app_primary"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:letterSpacing="0.08" />
+
+
+        <!-- HEIGHT -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Chiều cao"
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtHeight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:autofillHints="height"
+            android:background="@drawable/bg_input"
             android:hint="Ví dụ: 170"
             android:inputType="numberDecimal"
-            android:autofillHints="height" />
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="@color/app_text"
+            android:textColorHint="@color/app_secondary_text" />
 
-        <!-- ========================================= -->
-        <!-- Cân nặng ban đầu -->
-        <!-- ========================================= -->
+
+        <!-- START WEIGHT -->
 
         <TextView
             android:id="@+id/tvStartWeightLabel"
@@ -55,21 +83,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Cân nặng ban đầu (kg)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtStartWeight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:autofillHints="weight"
+            android:background="@drawable/bg_input"
             android:hint="Ví dụ: 70"
             android:inputType="numberDecimal"
-            android:autofillHints="weight" />
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="@color/app_text"
+            android:textColorHint="@color/app_secondary_text" />
 
-        <!-- ========================================= -->
-        <!-- Cân nặng mục tiêu -->
-        <!-- ========================================= -->
+
+        <!-- GOAL WEIGHT -->
 
         <TextView
             android:id="@+id/tvGoalWeightLabel"
@@ -77,143 +110,178 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Cân nặng mục tiêu (kg)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtGoalWeight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:autofillHints="weight"
+            android:background="@drawable/bg_input"
             android:hint="Ví dụ: 65"
             android:inputType="numberDecimal"
-            android:autofillHints="weight" />
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="@color/app_text"
+            android:textColorHint="@color/app_secondary_text" />
 
-        <!-- ========================================= -->
-        <!-- Đơn vị cân nặng -->
-        <!-- ========================================= -->
+
+        <!-- ================= UNIT ================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Đơn vị cân nặng"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/radioUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioKg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/app_primary"
                 android:text="kg"
+                android:textColor="@color/app_text"
                 android:checked="true" />
 
             <RadioButton
                 android:id="@+id/radioLbs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="lbs" />
+                android:layout_marginStart="28dp"
+                android:buttonTint="@color/app_primary"
+                android:text="lbs"
+                android:textColor="@color/app_text" />
 
         </RadioGroup>
 
-        <!-- ========================================= -->
-        <!-- Giao diện -->
-        <!-- ========================================= -->
+
+        <!-- ================= DIVIDER ================= -->
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="28dp"
-            android:background="@color/app_secondary_text" />
+            android:layout_marginTop="20dp"
+            android:background="@color/app_divider" />
+
+
+        <!-- ================= APPEARANCE ================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Giao diện"
-            android:textSize="20sp"
+            android:layout_marginTop="22dp"
+            android:text="GIAO DIỆN"
+            android:textColor="@color/app_primary"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:letterSpacing="0.08" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchDarkMode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="6dp"
             android:text="Chế độ tối"
-            android:textSize="16sp" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:buttonTint="@color/app_primary" />
 
-        <!-- ========================================= -->
-        <!-- Nhắc cân nặng -->
-        <!-- ========================================= -->
+
+        <!-- ================= REMINDER ================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Nhắc ghi nhận cân nặng"
-            android:textSize="20sp"
+            android:layout_marginTop="22dp"
+            android:text="NHẮC NHỞ"
+            android:textColor="@color/app_primary"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:letterSpacing="0.08" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nhắc ghi nhận cân nặng"
+            android:textColor="@color/app_text"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:text="Ứng dụng sẽ gửi thông báo mỗi ngày vào thời gian bạn chọn."
-            android:textSize="14sp"
-            android:textColor="@color/app_secondary_text" />
+            android:textColor="@color/app_secondary_text"
+            android:textSize="13sp" />
 
-        <!-- ========================================= -->
-        <!-- Chọn giờ -->
-        <!-- ========================================= -->
+
+        <!-- REMINDER TIME -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:text="Giờ nhắc"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnReminderTime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="07:00" />
+            android:layout_height="50dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/bg_primary_button"
+            android:minHeight="0dp"
+            android:text="07:00"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-        <!-- ========================================= -->
-        <!-- Bật / tắt nhắc nhở -->
-        <!-- ========================================= -->
+
+        <!-- REMINDER SWITCH -->
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchReminder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="6dp"
             android:text="Bật nhắc nhở hàng ngày"
-            android:textSize="16sp" />
+            android:textColor="@color/app_text"
+            android:textSize="15sp" />
 
-        <!-- ========================================= -->
-        <!-- Lưu cài đặt -->
-        <!-- ========================================= -->
+
+        <!-- ================= SAVE ================= -->
 
         <Button
             android:id="@+id/btnSaveSettings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Lưu cài đặt" />
+            android:layout_height="52dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_primary_button"
+            android:minHeight="0dp"
+            android:text="Lưu cài đặt"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

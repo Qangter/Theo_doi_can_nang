@@ -1,8 +1,9 @@
 package com.example.theo_doi_can_nang;
+
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,9 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.theo_doi_can_nang.adapter.WeightAdapter;
 import com.example.theo_doi_can_nang.data.DatabaseHelper;
 import com.example.theo_doi_can_nang.data.WeightRecord;
@@ -25,12 +27,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    // =========================
-    // View
-    // =========================
+    // =========================================================
+    // VIEW
+    // =========================================================
 
     private RecyclerView recyclerView;
 
@@ -47,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressGoal;
 
     private Button btnAdd;
-
-    // btnSettings trong XML là ImageButton
     private ImageButton btnSettings;
 
     private Button btnWeek;
@@ -57,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
     private WeightChartView weightChart;
 
-    // =========================
-    // Data
-    // =========================
+    // =========================================================
+    // DATA
+    // =========================================================
 
     private DatabaseHelper databaseHelper;
     private WeightAdapter adapter;
@@ -67,11 +66,19 @@ public class MainActivity extends AppCompatActivity {
     private List<WeightRecord> weightList;
 
 
+    // =========================================================
+    // ON CREATE
+    // =========================================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        android.content.SharedPreferences prefs =
+        // =====================================================
+        // Đọc chế độ sáng / tối
+        // =====================================================
+
+        SharedPreferences prefs =
                 getSharedPreferences(
                         "app_settings",
                         MODE_PRIVATE
@@ -96,12 +103,22 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
+        // =====================================================
+        // Layout
+        // =====================================================
+
         setContentView(R.layout.activity_main);
 
-        // Tạo Notification Channel
+        // =====================================================
+        // Notification Channel
+        // =====================================================
+
         NotificationHelper.createNotificationChannel(this);
 
-// Xin quyền thông báo trên Android 13+
+        // =====================================================
+        // Xin quyền thông báo Android 13+
+        // =====================================================
+
         if (android.os.Build.VERSION.SDK_INT >=
                 android.os.Build.VERSION_CODES.TIRAMISU) {
 
@@ -117,55 +134,78 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         }
-        // =========================
-        // Ánh xạ View
-        // =========================
 
-        recyclerView = findViewById(R.id.recyclerView);
+        // =====================================================
+        // ÁNH XẠ VIEW
+        // =====================================================
 
-        tvCurrentWeight = findViewById(R.id.tvCurrentWeight);
-        tvLastDate = findViewById(R.id.tvLastDate);
+        recyclerView =
+                findViewById(R.id.recyclerView);
 
-        tvBMI = findViewById(R.id.tvBMI);
-        tvBMIStatus = findViewById(R.id.tvBMIStatus);
+        tvCurrentWeight =
+                findViewById(R.id.tvCurrentWeight);
 
-        tvGoalWeight = findViewById(R.id.tvGoalWeight);
-        tvProgress = findViewById(R.id.tvProgress);
+        tvLastDate =
+                findViewById(R.id.tvLastDate);
+
+        tvBMI =
+                findViewById(R.id.tvBMI);
+
+        tvBMIStatus =
+                findViewById(R.id.tvBMIStatus);
+
+        tvGoalWeight =
+                findViewById(R.id.tvGoalWeight);
+
+        tvProgress =
+                findViewById(R.id.tvProgress);
+
         tvProgressDescription =
                 findViewById(R.id.tvProgressDescription);
 
-        tvRecordCount = findViewById(R.id.tvRecordCount);
+        tvRecordCount =
+                findViewById(R.id.tvRecordCount);
 
-        progressGoal = findViewById(R.id.progressGoal);
+        progressGoal =
+                findViewById(R.id.progressGoal);
 
-        btnAdd = findViewById(R.id.btnAdd);
+        btnAdd =
+                findViewById(R.id.btnAdd);
 
-        // XML dùng ImageButton
-        btnSettings = findViewById(R.id.btnSettings);
+        btnSettings =
+                findViewById(R.id.btnSettings);
 
-        btnWeek = findViewById(R.id.btnWeek);
-        btnMonth = findViewById(R.id.btnMonth);
-        btnYear = findViewById(R.id.btnYear);
+        btnWeek =
+                findViewById(R.id.btnWeek);
 
-        weightChart = findViewById(R.id.weightChart);
+        btnMonth =
+                findViewById(R.id.btnMonth);
 
-        // =========================
-        // Database
-        // =========================
+        btnYear =
+                findViewById(R.id.btnYear);
 
-        databaseHelper = new DatabaseHelper(this);
+        weightChart =
+                findViewById(R.id.weightChart);
 
-        // =========================
-        // RecyclerView
-        // =========================
+        // =====================================================
+        // DATABASE
+        // =====================================================
 
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(this)
-        );
+        databaseHelper =
+                new DatabaseHelper(this);
 
-        // =========================
-        // Nút thêm cân nặng
-        // =========================
+        // =====================================================
+        // RECYCLERVIEW
+        // =====================================================
+
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        // =====================================================
+        // NÚT THÊM CÂN NẶNG
+        // =====================================================
 
         btnAdd.setOnClickListener(v -> {
 
@@ -178,9 +218,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // =========================
-        // Nút cài đặt
-        // =========================
+        // =====================================================
+        // NÚT CÀI ĐẶT
+        // =====================================================
 
         btnSettings.setOnClickListener(v -> {
 
@@ -193,9 +233,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // =========================
-        // Bộ lọc biểu đồ
-        // =========================
+        // =====================================================
+        // BỘ LỌC BIỂU ĐỒ
+        // =====================================================
 
         btnWeek.setOnClickListener(v ->
                 updateChartByPeriod("week")
@@ -212,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // =========================================================
-    // Khi quay lại MainActivity
+    // ON RESUME
     // =========================================================
 
     @Override
@@ -231,27 +271,40 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
 
+        // =====================================================
+        // Lấy toàn bộ bản ghi từ SQLite
+        // =====================================================
+
         weightList =
                 databaseHelper.getAllWeights();
 
-        // =========================
-        // RecyclerView
-        // =========================
+        // =====================================================
+        // Nếu database trả về null
+        // =====================================================
+
+        if (weightList == null) {
+            weightList =
+                    new ArrayList<>();
+        }
+
+        // =====================================================
+        // Tạo Adapter mới với toàn bộ dữ liệu
+        // =====================================================
 
         adapter =
                 new WeightAdapter(weightList);
 
         recyclerView.setAdapter(adapter);
 
-        // =========================
-        // Thông tin tổng quan
-        // =========================
+        // =====================================================
+        // Cập nhật thông tin tổng quan
+        // =====================================================
 
         updateSummary();
 
-        // =========================
+        // =====================================================
         // Cập nhật biểu đồ
-        // =========================
+        // =====================================================
 
         updateChart();
     }
@@ -263,25 +316,36 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateSummary() {
 
+        // =====================================================
         // Không có dữ liệu
+        // =====================================================
+
         if (weightList == null ||
                 weightList.isEmpty()) {
 
-            tvCurrentWeight.setText("-- kg");
+            tvCurrentWeight.setText(
+                    "-- kg"
+            );
 
             tvLastDate.setText(
                     "Chưa có dữ liệu"
             );
 
-            tvBMI.setText("BMI: --");
+            tvBMI.setText(
+                    "BMI: --"
+            );
 
             tvBMIStatus.setText(
                     "Chưa có dữ liệu"
             );
 
-            tvGoalWeight.setText("-- kg");
+            tvGoalWeight.setText(
+                    "-- kg"
+            );
 
-            tvProgress.setText("0%");
+            tvProgress.setText(
+                    "0%"
+            );
 
             tvProgressDescription.setText(
                     "Chưa có dữ liệu cân nặng"
@@ -297,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // =====================================================
-        // Bản ghi mới nhất
+        // BẢN GHI MỚI NHẤT
         // =====================================================
 
         WeightRecord latestRecord =
@@ -310,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
                 latestRecord.getDate();
 
         // =====================================================
-        // Hiển thị cân nặng hiện tại
+        // CÂN NẶNG HIỆN TẠI
         // =====================================================
 
         tvCurrentWeight.setText(
@@ -321,6 +385,10 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
+        // =====================================================
+        // NGÀY GẦN NHẤT
+        // =====================================================
+
         tvLastDate.setText(
                 "Ngày " +
                         convertDateForDisplay(
@@ -329,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // =====================================================
-        // Số bản ghi
+        // SỐ BẢN GHI
         // =====================================================
 
         tvRecordCount.setText(
@@ -338,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // =====================================================
-        // SharedPreferences
+        // SHARED PREFERENCES
         // =====================================================
 
         SharedPreferences prefs =
@@ -401,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // =====================================================
-        // Mục tiêu
+        // MỤC TIÊU CÂN NẶNG
         // =====================================================
 
         if (goalWeight > 0) {
@@ -422,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // =====================================================
-        // Tiến độ mục tiêu
+        // TIẾN ĐỘ MỤC TIÊU
         // =====================================================
 
         if (startWeight > 0 &&
@@ -492,14 +560,17 @@ public class MainActivity extends AppCompatActivity {
             float bmi) {
 
         if (bmi < 18.5f) {
+
             return "Thiếu cân";
         }
 
         if (bmi < 25f) {
+
             return "Bình thường";
         }
 
         if (bmi < 30f) {
+
             return "Thừa cân";
         }
 
@@ -508,7 +579,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // =========================================================
-    // TÍNH TIẾN ĐỘ
+    // TÍNH TIẾN ĐỘ MỤC TIÊU
     // =========================================================
 
     private int calculateProgress(
@@ -516,20 +587,34 @@ public class MainActivity extends AppCompatActivity {
             float currentWeight,
             float goalWeight) {
 
+        // =====================================================
+        // Trường hợp cân nặng ban đầu
+        // bằng cân nặng mục tiêu
+        // =====================================================
+
         if (startWeight == goalWeight) {
 
             if (currentWeight == goalWeight) {
+
                 return 100;
             }
 
             return 0;
         }
 
+        // =====================================================
+        // Công thức tính tiến độ
+        // =====================================================
+
         float progress =
                 (startWeight - currentWeight)
                         /
                         (startWeight - goalWeight)
                         * 100f;
+
+        // =====================================================
+        // Giới hạn từ 0 -> 100
+        // =====================================================
 
         progress =
                 Math.max(
@@ -550,6 +635,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateChart() {
 
+        // =====================================================
+        // Không có dữ liệu
+        // =====================================================
+
         if (weightList == null ||
                 weightList.isEmpty()) {
 
@@ -560,16 +649,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // =====================================================
+        // Copy danh sách
+        // =====================================================
+
         ArrayList<WeightRecord> chartList =
                 new ArrayList<>(
                         weightList
                 );
 
-        // Database sắp xếp:
-        // mới nhất → cũ nhất
+        // =====================================================
+        // Database:
+        // mới nhất -> cũ nhất
         //
-        // Biểu đồ cần:
-        // cũ nhất → mới nhất
+        // Biểu đồ:
+        // cũ nhất -> mới nhất
+        // =====================================================
 
         Collections.reverse(
                 chartList
@@ -588,6 +683,10 @@ public class MainActivity extends AppCompatActivity {
     private void updateChartByPeriod(
             String period) {
 
+        // =====================================================
+        // Không có dữ liệu
+        // =====================================================
+
         if (weightList == null ||
                 weightList.isEmpty()) {
 
@@ -598,12 +697,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // =====================================================
+        // Calendar hiện tại
+        // =====================================================
+
         Calendar calendar =
                 Calendar.getInstance();
-
-        // =====================================================
-        // Ngày hiện tại
-        // =====================================================
 
         Date now =
                 calendar.getTime();
@@ -643,22 +742,25 @@ public class MainActivity extends AppCompatActivity {
                 calendar.getTime();
 
         // =====================================================
-        // Danh sách kết quả
+        // Danh sách dữ liệu lọc
         // =====================================================
 
         ArrayList<WeightRecord> filteredList =
                 new ArrayList<>();
 
-        // Database:
-        // mới → cũ
-        //
-        // Đảo lại:
-        // cũ → mới
+        // =====================================================
+        // Copy danh sách
+        // =====================================================
 
         ArrayList<WeightRecord> chartList =
                 new ArrayList<>(
                         weightList
                 );
+
+        // =====================================================
+        // Đảo từ mới -> cũ
+        // thành cũ -> mới
+        // =====================================================
 
         Collections.reverse(
                 chartList
@@ -701,7 +803,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // =====================================================
-        // Hiển thị lên biểu đồ
+        // Hiển thị dữ liệu đã lọc
         // =====================================================
 
         weightChart.setData(
@@ -711,7 +813,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // =========================================================
-    // ĐỔI yyyy-MM-dd → dd/MM/yyyy
+    // CHUYỂN yyyy-MM-dd -> dd/MM/yyyy
     // =========================================================
 
     private String convertDateForDisplay(

@@ -2,29 +2,45 @@ package com.example.theo_doi_can_nang;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.example.theo_doi_can_nang.data.WeightRecord;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class WeightChartView extends View {
 
+    // =========================================================
+    // PAINT
+    // =========================================================
+
     private Paint axisPaint;
     private Paint linePaint;
     private Paint pointPaint;
     private Paint textPaint;
+    private Paint dateBackgroundPaint;
+
+    // =========================================================
+    // DỮ LIỆU
+    // =========================================================
 
     private List<WeightRecord> records =
             new ArrayList<>();
+
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
 
     public WeightChartView(Context context) {
         super(context);
@@ -55,23 +71,45 @@ public class WeightChartView extends View {
 
     private void init() {
 
+        // =====================================================
+        // TRỤC BIỂU ĐỒ
+        // =====================================================
+
         axisPaint =
                 new Paint(Paint.ANTI_ALIAS_FLAG);
 
         axisPaint.setStrokeWidth(2f);
+
         axisPaint.setStyle(
                 Paint.Style.STROKE
         );
 
 
+        // =====================================================
+        // ĐƯỜNG BIỂU ĐỒ
+        // =====================================================
+
         linePaint =
                 new Paint(Paint.ANTI_ALIAS_FLAG);
 
         linePaint.setStrokeWidth(5f);
+
         linePaint.setStyle(
                 Paint.Style.STROKE
         );
 
+        linePaint.setStrokeCap(
+                Paint.Cap.ROUND
+        );
+
+        linePaint.setStrokeJoin(
+                Paint.Join.ROUND
+        );
+
+
+        // =====================================================
+        // ĐIỂM DỮ LIỆU
+        // =====================================================
 
         pointPaint =
                 new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -81,42 +119,163 @@ public class WeightChartView extends View {
         );
 
 
+        // =====================================================
+        // CHỮ
+        // =====================================================
+
         textPaint =
                 new Paint(Paint.ANTI_ALIAS_FLAG);
 
         textPaint.setTextSize(28f);
+
+        textPaint.setTypeface(
+                android.graphics.Typeface.create(
+                        android.graphics.Typeface.DEFAULT,
+                        android.graphics.Typeface.NORMAL
+                )
+        );
+
+
+        // =====================================================
+        // NỀN PHÍA SAU NGÀY
+        // =====================================================
+
+        dateBackgroundPaint =
+                new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        dateBackgroundPaint.setStyle(
+                Paint.Style.FILL
+        );
+
+
+        // =====================================================
+        // CẬP NHẬT MÀU
+        // =====================================================
 
         updateColors();
     }
 
 
     // =========================================================
-    // LẤY MÀU THEO THEME
+    // CẬP NHẬT MÀU
     // =========================================================
 
     private void updateColors() {
 
-        int textColor =
-                ContextCompat.getColor(
-                        getContext(),
-                        R.color.app_text
-                );
+        boolean isDarkMode =
+                (getResources().getConfiguration().uiMode
+                        &
+                        android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                        ==
+                        android.content.res.Configuration.UI_MODE_NIGHT_YES;
 
-        axisPaint.setColor(
-                textColor
-        );
 
-        linePaint.setColor(
-                textColor
-        );
+        if (isDarkMode) {
 
-        pointPaint.setColor(
-                textColor
-        );
+            // =================================================
+            // DARK MODE
+            // =================================================
 
-        textPaint.setColor(
-                textColor
-        );
+            // Chữ thông thường
+            textPaint.setColor(
+                    Color.WHITE
+            );
+
+
+            // Trục biểu đồ
+            axisPaint.setColor(
+                    Color.rgb(
+                            190,
+                            190,
+                            200
+                    )
+            );
+
+
+            // Đường biểu đồ
+            linePaint.setColor(
+                    Color.rgb(
+                            138,
+                            106,
+                            200
+                    )
+            );
+
+
+            // Điểm dữ liệu
+            pointPaint.setColor(
+                    Color.rgb(
+                            138,
+                            106,
+                            200
+                    )
+            );
+
+
+            // Nền phía sau ngày
+            dateBackgroundPaint.setColor(
+                    Color.rgb(
+                            45,
+                            45,
+                            54
+                    )
+            );
+
+        } else {
+
+            // =================================================
+            // LIGHT MODE
+            // =================================================
+
+            // Chữ thông thường
+            textPaint.setColor(
+                    Color.rgb(
+                            32,
+                            33,
+                            36
+                    )
+            );
+
+
+            // Trục biểu đồ
+            axisPaint.setColor(
+                    Color.rgb(
+                            100,
+                            100,
+                            110
+                    )
+            );
+
+
+            // Đường biểu đồ
+            linePaint.setColor(
+                    Color.rgb(
+                            111,
+                            77,
+                            181
+                    )
+            );
+
+
+            // Điểm dữ liệu
+            pointPaint.setColor(
+                    Color.rgb(
+                            111,
+                            77,
+                            181
+                    )
+            );
+
+
+            // Nền phía sau ngày
+            dateBackgroundPaint.setColor(
+                    Color.rgb(
+                            111,
+                            77,
+                            181
+                    )
+            );
+        }
     }
 
 
@@ -147,7 +306,7 @@ public class WeightChartView extends View {
 
 
     // =========================================================
-    // VẼ BIỂU ĐỒ
+    // VẼ
     // =========================================================
 
     @Override
@@ -156,10 +315,11 @@ public class WeightChartView extends View {
 
         super.onDraw(canvas);
 
-        // Đảm bảo màu luôn đúng
-        // theo Light / Dark Mode
+        // Cập nhật màu theo theme hiện tại
         updateColors();
 
+
+        // Không có dữ liệu
         if (records == null ||
                 records.isEmpty()) {
 
@@ -167,6 +327,7 @@ public class WeightChartView extends View {
 
             return;
         }
+
 
         drawChart(canvas);
     }
@@ -185,9 +346,21 @@ public class WeightChartView extends View {
         float centerY =
                 getHeight() / 2f;
 
+
         textPaint.setTextAlign(
                 Paint.Align.CENTER
         );
+
+        textPaint.setTextSize(28f);
+
+        textPaint.setColor(
+                Color.rgb(
+                        32,
+                        33,
+                        36
+                )
+        );
+
 
         canvas.drawText(
                 "Chưa có dữ liệu cân nặng",
@@ -212,11 +385,20 @@ public class WeightChartView extends View {
                 getHeight();
 
 
-        // Khoảng cách biểu đồ
+        // =====================================================
+        // KHOẢNG BIỂU ĐỒ
+        // =====================================================
+
         float left = 70f;
-        float right = width - 30f;
+
+        float right =
+                width - 30f;
+
         float top = 30f;
-        float bottom = height - 55f;
+
+        // Chừa khoảng phía dưới cho ngày tháng
+        float bottom =
+                height - 70f;
 
 
         // =====================================================
@@ -229,32 +411,42 @@ public class WeightChartView extends View {
         float maxWeight =
                 records.get(0).getWeight();
 
+
         for (WeightRecord record :
                 records) {
 
             float weight =
                     record.getWeight();
 
+
             if (weight < minWeight) {
-                minWeight = weight;
+
+                minWeight =
+                        weight;
             }
 
+
             if (weight > maxWeight) {
-                maxWeight = weight;
+
+                maxWeight =
+                        weight;
             }
         }
 
 
         // =====================================================
-        // TẠO KHOẢNG BIỂU ĐỒ
+        // TẠO KHOẢNG ĐỆM
         // =====================================================
 
         float range =
                 maxWeight - minWeight;
 
+
         if (range == 0) {
+
             range = 1;
         }
+
 
         minWeight -=
                 range * 0.1f;
@@ -275,6 +467,7 @@ public class WeightChartView extends View {
                 axisPaint
         );
 
+
         canvas.drawLine(
                 left,
                 bottom,
@@ -285,15 +478,20 @@ public class WeightChartView extends View {
 
 
         // =====================================================
-        // ĐƯỜNG BIỂU ĐỒ
+        // PATH ĐƯỜNG BIỂU ĐỒ
         // =====================================================
 
         Path path =
                 new Path();
 
+
         int count =
                 records.size();
 
+
+        // =====================================================
+        // VẼ TỪNG ĐIỂM
+        // =====================================================
 
         for (int i = 0;
              i < count;
@@ -308,6 +506,7 @@ public class WeightChartView extends View {
             // =================================================
 
             float x;
+
 
             if (count == 1) {
 
@@ -333,10 +532,12 @@ public class WeightChartView extends View {
             float weight =
                     record.getWeight();
 
+
             float ratio =
                     (weight - minWeight)
                             /
                             (maxWeight - minWeight);
+
 
             float y =
                     bottom
@@ -346,7 +547,7 @@ public class WeightChartView extends View {
 
 
             // =================================================
-            // NỐI ĐƯỜNG
+            // PATH
             // =================================================
 
             if (i == 0) {
@@ -366,7 +567,7 @@ public class WeightChartView extends View {
 
 
             // =================================================
-            // VẼ ĐIỂM
+            // ĐIỂM
             // =================================================
 
             canvas.drawCircle(
@@ -378,12 +579,25 @@ public class WeightChartView extends View {
 
 
             // =================================================
-            // HIỂN THỊ CÂN NẶNG
+            // GIÁ TRỊ CÂN NẶNG
             // =================================================
 
             textPaint.setTextAlign(
                     Paint.Align.CENTER
             );
+
+            textPaint.setTextSize(24f);
+
+            textPaint.setColor(
+                    isDarkMode()
+                            ? Color.WHITE
+                            : Color.rgb(
+                            32,
+                            33,
+                            36
+                    )
+            );
+
 
             canvas.drawText(
                     String.format(
@@ -398,7 +612,7 @@ public class WeightChartView extends View {
 
 
             // =================================================
-            // HIỂN THỊ NGÀY
+            // NGÀY
             // =================================================
 
             String date =
@@ -406,17 +620,91 @@ public class WeightChartView extends View {
                             record.getDate()
                     );
 
+
+            // =================================================
+            // KÍCH THƯỚC NỀN CHO NGÀY
+            // =================================================
+
+            textPaint.setTextSize(24f);
+
+            float textWidth =
+                    textPaint.measureText(
+                            date
+                    );
+
+
+            float paddingHorizontal =
+                    8f;
+
+
+            float dateLeft =
+                    x
+                            -
+                            textWidth / 2f
+                            -
+                            paddingHorizontal;
+
+
+            float dateRight =
+                    x
+                            +
+                            textWidth / 2f
+                            +
+                            paddingHorizontal;
+
+
+            float dateTop =
+                    bottom + 5f;
+
+
+            float dateBottom =
+                    bottom + 35f;
+
+
+            // =================================================
+            // NỀN PHÍA SAU NGÀY
+            // =================================================
+
+            canvas.drawRoundRect(
+                    dateLeft,
+                    dateTop,
+                    dateRight,
+                    dateBottom,
+                    8f,
+                    8f,
+                    dateBackgroundPaint
+            );
+
+
+            // =================================================
+            // CHỮ NGÀY
+            // =================================================
+            // LUÔN LUÔN MÀU TRẮNG
+            // CẢ LIGHT MODE VÀ DARK MODE
+            // =================================================
+
+            textPaint.setColor(
+                    Color.WHITE
+            );
+
+            textPaint.setTextSize(24f);
+
+            textPaint.setTextAlign(
+                    Paint.Align.CENTER
+            );
+
+
             canvas.drawText(
                     date,
                     x,
-                    bottom + 30,
+                    bottom + 26f,
                     textPaint
             );
         }
 
 
         // =====================================================
-        // VẼ ĐƯỜNG
+        // VẼ ĐƯỜNG BIỂU ĐỒ
         // =====================================================
 
         canvas.drawPath(
@@ -433,6 +721,21 @@ public class WeightChartView extends View {
                 Paint.Align.RIGHT
         );
 
+        textPaint.setTextSize(24f);
+
+
+        textPaint.setColor(
+                isDarkMode()
+                        ? Color.WHITE
+                        : Color.rgb(
+                        32,
+                        33,
+                        36
+                )
+        );
+
+
+        // MAX
         canvas.drawText(
                 String.format(
                         Locale.getDefault(),
@@ -444,6 +747,8 @@ public class WeightChartView extends View {
                 textPaint
         );
 
+
+        // MIN
         canvas.drawText(
                 String.format(
                         Locale.getDefault(),
@@ -458,7 +763,28 @@ public class WeightChartView extends View {
 
 
     // =========================================================
-    // ĐỔI NGÀY
+    // KIỂM TRA DARK MODE
+    // =========================================================
+
+    private boolean isDarkMode() {
+
+        return (
+                getResources()
+                        .getConfiguration()
+                        .uiMode
+                        &
+                        android.content.res.Configuration
+                                .UI_MODE_NIGHT_MASK
+        )
+                ==
+                android.content.res.Configuration
+                        .UI_MODE_NIGHT_YES;
+    }
+
+
+    // =========================================================
+    // CHUYỂN NGÀY
+    // yyyy-MM-dd -> dd/MM
     // =========================================================
 
     private String convertDateForDisplay(
@@ -466,22 +792,25 @@ public class WeightChartView extends View {
 
         try {
 
-            java.text.SimpleDateFormat
-                    inputFormat =
-                    new java.text.SimpleDateFormat(
+            SimpleDateFormat inputFormat =
+                    new SimpleDateFormat(
                             "yyyy-MM-dd",
                             Locale.getDefault()
                     );
 
-            java.text.SimpleDateFormat
-                    outputFormat =
-                    new java.text.SimpleDateFormat(
+
+            SimpleDateFormat outputFormat =
+                    new SimpleDateFormat(
                             "dd/MM",
                             Locale.getDefault()
                     );
 
-            java.util.Date parsedDate =
-                    inputFormat.parse(date);
+
+            Date parsedDate =
+                    inputFormat.parse(
+                            date
+                    );
+
 
             if (parsedDate != null) {
 
@@ -494,6 +823,7 @@ public class WeightChartView extends View {
 
             e.printStackTrace();
         }
+
 
         return date;
     }
