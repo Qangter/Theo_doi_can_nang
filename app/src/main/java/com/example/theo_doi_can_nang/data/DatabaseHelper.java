@@ -12,7 +12,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weight_tracker.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public static final String TABLE_NAME = "weight_records";
 
@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_NOTE = "note";
+    public static final String COLUMN_IMAGE_PATH = "image_path";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,7 +34,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_DATE + " TEXT NOT NULL, " +
                         COLUMN_WEIGHT + " REAL NOT NULL, " +
-                        COLUMN_NOTE + " TEXT" +
+                        COLUMN_NOTE + " TEXT, " +
+                        COLUMN_IMAGE_PATH + " TEXT" +
                         ")";
 
         db.execSQL(createTable);
@@ -45,14 +47,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int oldVersion,
             int newVersion) {
 
-        // Trong giai đoạn phát triển,
-        // xóa database cũ và tạo lại.
+        if (oldVersion < 3) {
+            try {
+                db.execSQL(
+                        "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_IMAGE_PATH + " TEXT"
+                );
+            } catch (Exception e) {
 
-        db.execSQL(
-                "DROP TABLE IF EXISTS " + TABLE_NAME
-        );
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+                onCreate(db);
+            }
+        } else {
 
-        onCreate(db);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            onCreate(db);
+        }
     }
 
     // =====================================================
@@ -63,6 +72,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String date,
             float weight,
             String note) {
+        return insertWeight(date, weight, note, null);
+    }
+
+    public long insertWeight(
+            String date,
+            float weight,
+            String note,
+            String imagePath) {
 
         SQLiteDatabase db =
                 this.getWritableDatabase();
@@ -70,20 +87,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values =
                 new ContentValues();
 
-        values.put(
-                COLUMN_DATE,
-                date
-        );
-
-        values.put(
-                COLUMN_WEIGHT,
-                weight
-        );
-
-        values.put(
-                COLUMN_NOTE,
-                note
-        );
+        values.put(COLUMN_DATE, date);
+        values.put(COLUMN_WEIGHT, weight);
+        values.put(COLUMN_NOTE, note);
+        values.put(COLUMN_IMAGE_PATH, imagePath);
 
         long result =
                 db.insert(
@@ -152,12 +159,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                 )
                         );
 
+                int imgIdx = cursor.getColumnIndex(COLUMN_IMAGE_PATH);
+                String imagePath = imgIdx != -1 ? cursor.getString(imgIdx) : null;
+
                 list.add(
                         new WeightRecord(
                                 id,
                                 date,
                                 weight,
-                                note
+                                note,
+                                imagePath
                         )
                 );
 
@@ -179,6 +190,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String date,
             float weight,
             String note) {
+        return updateWeight(id, date, weight, note, null);
+    }
+
+    public int updateWeight(
+            int id,
+            String date,
+            float weight,
+            String note,
+            String imagePath) {
 
         SQLiteDatabase db =
                 this.getWritableDatabase();
@@ -186,20 +206,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values =
                 new ContentValues();
 
-        values.put(
-                COLUMN_DATE,
-                date
-        );
-
-        values.put(
-                COLUMN_WEIGHT,
-                weight
-        );
-
-        values.put(
-                COLUMN_NOTE,
-                note
-        );
+        values.put(COLUMN_DATE, date);
+        values.put(COLUMN_WEIGHT, weight);
+        values.put(COLUMN_NOTE, note);
+        values.put(COLUMN_IMAGE_PATH, imagePath);
 
         int result =
                 db.update(

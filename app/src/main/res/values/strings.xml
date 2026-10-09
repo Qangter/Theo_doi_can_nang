@@ -14,6 +14,11 @@
     <string name="note">Ghi chú</string>
     <string name="note_hint">Ví dụ: Sau khi tập thể dục</string>
 
+    <string name="progress_photo">Ảnh vóc dáng (Progress Photo)</string>
+    <string name="take_photo">Chụp ảnh</string>
+    <string name="choose_gallery">Chọn từ thư viện</string>
+    <string name="remove_photo">Xóa ảnh</string>
+
     <string name="save">Lưu</string>
     <string name="cancel">Hủy</string>
 
