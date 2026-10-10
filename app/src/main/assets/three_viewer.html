@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: transparent;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+    }
+    model-viewer {
+      width: 100vw;
+      height: 100vh;
+      --poster-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <model-viewer
+      id="trophyViewer"
+      src="beginning_trophy.glb"
+      auto-rotate
+      camera-controls
+      shadow-intensity="1"
+      exposure="1.2"
+      touch-action="pan-y">
+  </model-viewer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const model = urlParams.get('model') || 'beginning_trophy.glb';
+
+    document.getElementById('trophyViewer').setAttribute('src', model);
+  </script>
+</body>
+</html>

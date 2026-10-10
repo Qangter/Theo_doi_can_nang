@@ -10,10 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.theo_doi_can_nang.adapter.WeightAdapter;
+import com.example.theo_doi_can_nang.data.Achievement;
+import com.example.theo_doi_can_nang.data.AchievementManager;
 import com.example.theo_doi_can_nang.data.DatabaseHelper;
 import com.example.theo_doi_can_nang.data.WeightRecord;
 
@@ -48,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnAdd;
 
-    // btnSettings trong XML là ImageButton
+    // btnSettings và btnTrophy trong XML là ImageButton
     private ImageButton btnSettings;
+    private ImageButton btnTrophy;
 
     private Button btnWeek;
     private Button btnMonth;
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         // XML dùng ImageButton
         btnSettings = findViewById(R.id.btnSettings);
+        btnTrophy = findViewById(R.id.btnTrophy);
 
         btnWeek = findViewById(R.id.btnWeek);
         btnMonth = findViewById(R.id.btnMonth);
@@ -194,6 +199,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // =========================
+        // Nút Bộ sưu tập Cúp 3D
+        // =========================
+
+        btnTrophy.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            MainActivity.this,
+                            AchievementsActivity.class
+                    );
+
+            startActivity(intent);
+        });
+
+        // =========================
         // Bộ lọc biểu đồ
         // =========================
 
@@ -221,6 +241,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (databaseHelper != null) {
             loadData();
+            checkNewAchievements();
+        }
+    }
+
+    private void checkNewAchievements() {
+        List<Achievement> newlyUnlocked = AchievementManager.checkAndUnlockAchievements(this);
+        if (newlyUnlocked != null && !newlyUnlocked.isEmpty()) {
+            for (Achievement achievement : newlyUnlocked) {
+                TrophyDialog.show(this, achievement);
+            }
         }
     }
 
@@ -388,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
             tvBMIStatus.setText(
                     getBMIStatus(bmi)
             );
+            updateBmiBadgeStyle(bmi);
 
         } else {
 
@@ -504,6 +535,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return "Béo phì";
+    }
+
+    private void updateBmiBadgeStyle(float bmi) {
+        int bgColor;
+        int textColor;
+
+        if (bmi < 18.5f) {
+            bgColor = ContextCompat.getColor(this, R.color.bmi_underweight_bg);
+            textColor = ContextCompat.getColor(this, R.color.bmi_underweight_text);
+        } else if (bmi < 25f) {
+            bgColor = ContextCompat.getColor(this, R.color.bmi_normal_bg);
+            textColor = ContextCompat.getColor(this, R.color.bmi_normal_text);
+        } else if (bmi < 30f) {
+            bgColor = ContextCompat.getColor(this, R.color.bmi_overweight_bg);
+            textColor = ContextCompat.getColor(this, R.color.bmi_overweight_text);
+        } else {
+            bgColor = ContextCompat.getColor(this, R.color.bmi_obese_bg);
+            textColor = ContextCompat.getColor(this, R.color.bmi_obese_text);
+        }
+
+        tvBMIStatus.setTextColor(textColor);
+        if (tvBMIStatus.getBackground() != null) {
+            tvBMIStatus.getBackground().setTint(bgColor);
+        }
     }
 
 

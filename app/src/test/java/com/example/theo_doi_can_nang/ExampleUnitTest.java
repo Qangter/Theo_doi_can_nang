@@ -1,5 +1,6 @@
 package com.example.theo_doi_can_nang;
 
+import com.example.theo_doi_can_nang.data.Achievement;
 import com.example.theo_doi_can_nang.data.WeightRecord;
 
 import org.junit.Test;
@@ -9,8 +10,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class ExampleUnitTest {
 
@@ -29,6 +32,31 @@ public class ExampleUnitTest {
 
         recordWithPhoto.setImagePath("/new/path/to/photo.jpg");
         assertEquals("/new/path/to/photo.jpg", recordWithPhoto.getImagePath());
+    }
+
+    @Test
+    public void testAchievementModel() {
+        Achievement achievement = new Achievement(
+                "burn_3kg",
+                "Bứt Phá 3KG",
+                "Giảm thành công từ 3kg trở lên so với ban đầu",
+                "trophy_gold.glb",
+                false,
+                ""
+        );
+
+        assertEquals("burn_3kg", achievement.getId());
+        assertEquals("Bứt Phá 3KG", achievement.getTitle());
+        assertEquals("Giảm thành công từ 3kg trở lên so với ban đầu", achievement.getDescription());
+        assertEquals("trophy_gold.glb", achievement.getModelFileName());
+        assertFalse(achievement.isUnlocked());
+        assertEquals("", achievement.getUnlockedDate());
+
+        achievement.setUnlocked(true);
+        achievement.setUnlockedDate("10/10/2026");
+
+        assertTrue(achievement.isUnlocked());
+        assertEquals("10/10/2026", achievement.getUnlockedDate());
     }
 
     @Test

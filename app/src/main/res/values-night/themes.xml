@@ -1,20 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style
-        name="Base.Theme.Theo_doi_can_nang"
-        parent="Theme.Material3.DayNight.NoActionBar">
-
-        <item name="android:fontFamily">sans</item>
-
+    <style name="Base.Theme.Theo_doi_can_nang" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="android:statusBarColor">@color/app_background</item>
         <item name="android:windowLightStatusBar">false</item>
-
-        <item name="android:statusBarColor">#121212</item>
-
-        <item name="android:navigationBarColor">#121212</item>
-
-        <item name="android:windowBackground">#121212</item>
-
+        <item name="android:windowBackground">@color/app_background</item>
     </style>
 
 </resources>

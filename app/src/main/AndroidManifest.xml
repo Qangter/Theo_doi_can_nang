@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- three_viewer.html loads model-viewer from the Google CDN. -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission
         android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -43,6 +45,10 @@
 
         <activity
             android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AchievementsActivity"
             android:exported="false" />
 
         <!-- Màn hình chính -->

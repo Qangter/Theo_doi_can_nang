@@ -35,6 +35,7 @@ public class AddEditActivity extends AppCompatActivity {
     private EditText edtNote;
 
     private TextView tvWeightLabel;
+    private com.google.android.material.textfield.TextInputLayout tvWeightLabelLayout;
     private ImageView imgProgressPhoto;
 
     private Button btnTakePhoto;
@@ -70,6 +71,7 @@ public class AddEditActivity extends AppCompatActivity {
         edtNote = findViewById(R.id.edtNote);
 
         tvWeightLabel = findViewById(R.id.tvWeightLabel);
+        tvWeightLabelLayout = findViewById(R.id.tvWeightLabelLayout);
         imgProgressPhoto = findViewById(R.id.imgProgressPhoto);
 
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
@@ -277,11 +279,15 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     private void updateWeightUnitUI() {
-        if (weightUnit.equals("lbs")) {
-            tvWeightLabel.setText("Cân nặng (lbs)");
+        if ("lbs".equals(weightUnit)) {
+            if (tvWeightLabelLayout != null) {
+                tvWeightLabelLayout.setHint("Cân nặng (lbs)");
+            }
             edtWeight.setHint("Ví dụ: 154.3");
         } else {
-            tvWeightLabel.setText("Cân nặng (kg)");
+            if (tvWeightLabelLayout != null) {
+                tvWeightLabelLayout.setHint("Cân nặng (kg)");
+            }
             edtWeight.setHint("Ví dụ: 70");
         }
     }

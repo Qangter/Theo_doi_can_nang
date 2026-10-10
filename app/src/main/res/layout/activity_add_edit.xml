@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:background="@color/app_background"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,131 +17,181 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_weight"
+            android:textColor="@color/app_text"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text"/>
+            android:textStyle="bold" />
 
         <!-- Ngày -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/date"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtDate"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/date_hint"
-            android:inputType="date"
-            android:autofillHints="date"/>
+            android:layout_marginTop="20dp"
+            android:hint="@string/date"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="date"
+                android:hint="@string/date_hint"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Cân nặng -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvWeightLabelLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:hint="Cân nặng (kg)"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="weight"
+                android:hint="Ví dụ: 70"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvWeightLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Cân nặng (kg)"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ví dụ: 70"
-            android:inputType="numberDecimal"
-            android:autofillHints="weight"/>
+            android:visibility="gone" />
 
         <!-- Ghi chú -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/note"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtNote"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/note_hint"
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:minLines="2"
-            android:gravity="top|start"
-            android:autofillHints="none"/>
+            android:layout_marginTop="14dp"
+            android:hint="@string/note"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="none"
+                android:gravity="top|start"
+                android:hint="@string/note_hint"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:minLines="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Ảnh vóc dáng -->
-
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/progress_photo"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            app:cardBackgroundColor="@color/app_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/card_stroke"
+            app:strokeWidth="1dp">
 
-        <ImageView
-            android:id="@+id/imgProgressPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/progress_photo"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnTakePhoto"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/take_photo" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <Button
-                android:id="@+id/btnPickGallery"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:text="@string/choose_gallery" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/progress_photo"
+                    android:textColor="@color/app_text"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgProgressPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/progress_photo"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
-        <Button
-            android:id="@+id/btnRemovePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/remove_photo"
-            android:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-        <Button
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTakePhoto"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/take_photo"
+                        app:icon="@android:drawable/ic_menu_camera" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPickGallery"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/choose_gallery"
+                        app:icon="@android:drawable/ic_menu_gallery" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRemovePhoto"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/remove_photo"
+                    android:textColor="@color/bmi_obese_text"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Nút bấm Lưu & Hủy -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/save"/>
+            android:layout_marginTop="24dp"
+            android:text="@string/save"
+            app:cornerRadius="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"/>
+            android:layout_marginTop="6dp"
+            android:text="@string/cancel"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

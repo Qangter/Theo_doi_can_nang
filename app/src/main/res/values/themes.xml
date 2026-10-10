@@ -1,16 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style
-        name="Base.Theme.Theo_doi_can_nang"
-        parent="Theme.Material3.DayNight.NoActionBar">
-
-        <!-- Customize your light theme here. -->
-
+    <style name="Base.Theme.Theo_doi_can_nang" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="android:statusBarColor">@color/app_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/app_background</item>
     </style>
 
-    <style
-        name="Theme.Theo_doi_can_nang"
-        parent="Base.Theme.Theo_doi_can_nang" />
+    <style name="Theme.Theo_doi_can_nang" parent="Base.Theme.Theo_doi_can_nang" />
 
 </resources>

@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Màu giao diện chung -->
-    <color name="app_background">#F5F7FA</color>
+    <!-- Màu chủ đạo (Material 3 Emerald / Health Theme) -->
+    <color name="primary">#1B6742</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#D1E8D9</color>
+    <color name="on_primary_container">#002111</color>
+
+    <!-- Màu phụ -->
+    <color name="secondary">#516355</color>
+    <color name="secondary_container">#D4E8D6</color>
+
+    <!-- Màu nền & Thẻ -->
+    <color name="app_background">#F4F7F4</color>
     <color name="app_card">#FFFFFF</color>
+    <color name="card_stroke">#E0E7E1</color>
 
     <!-- Chữ -->
-    <color name="app_text">#202124</color>
-    <color name="app_secondary_text">#5F6368</color>
+    <color name="app_text">#191C1A</color>
+    <color name="app_secondary_text">#727972</color>
+    <color name="app_divider">#C2C9C2</color>
 
-    <!-- Đường phân cách -->
-    <color name="app_divider">#DADCE0</color>
+    <!-- Trạng thái BMI Badge Colors -->
+    <color name="bmi_underweight_bg">#FFF8E1</color>
+    <color name="bmi_underweight_text">#F57F17</color>
+
+    <color name="bmi_normal_bg">#E8F5E9</color>
+    <color name="bmi_normal_text">#2E7D32</color>
+
+    <color name="bmi_overweight_bg">#FFF3E0</color>
+    <color name="bmi_overweight_text">#E65100</color>
+
+    <color name="bmi_obese_bg">#FFEBEE</color>
+    <color name="bmi_obese_text">#C62828</color>
 
 </resources>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:background="@color/app_background"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,108 +13,115 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- ========================================= -->
-        <!-- Tiêu đề -->
-        <!-- ========================================= -->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cài đặt"
+            android:textColor="@color/app_text"
             android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textStyle="bold" />
 
-        <!-- ========================================= -->
-        <!-- Chiều cao -->
-        <!-- ========================================= -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Chiều cao (cm)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
-
-        <EditText
-            android:id="@+id/edtHeight"
+        <!-- CHIỀU CAO -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ví dụ: 170"
-            android:inputType="numberDecimal"
-            android:autofillHints="height" />
+            android:layout_marginTop="20dp"
+            android:hint="Chiều cao (cm)"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
 
-        <!-- ========================================= -->
-        <!-- Cân nặng ban đầu -->
-        <!-- ========================================= -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="height"
+                android:hint="Ví dụ: 170"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- CÂN NẶNG BAN ĐẦU -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Cân nặng ban đầu (kg)"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtStartWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="weight"
+                android:hint="Ví dụ: 70"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvStartWeightLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Cân nặng ban đầu (kg)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edtStartWeight"
+        <!-- CÂN NẶNG MỤC TIÊU -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ví dụ: 70"
-            android:inputType="numberDecimal"
-            android:autofillHints="weight" />
+            android:layout_marginTop="12dp"
+            android:hint="Cân nặng mục tiêu (kg)"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
 
-        <!-- ========================================= -->
-        <!-- Cân nặng mục tiêu -->
-        <!-- ========================================= -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtGoalWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="weight"
+                android:hint="Ví dụ: 65"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvGoalWeightLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Cân nặng mục tiêu (kg)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edtGoalWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ví dụ: 65"
-            android:inputType="numberDecimal"
-            android:autofillHints="weight" />
-
-        <!-- ========================================= -->
-        <!-- Đơn vị cân nặng -->
-        <!-- ========================================= -->
-
+        <!-- ĐƠN VỊ CÂN NẶNG -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Đơn vị cân nặng"
+            android:textColor="@color/app_text"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/radioUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioKg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="kg"
-                android:checked="true" />
+                android:checked="true"
+                android:text="kg" />
 
             <RadioButton
                 android:id="@+id/radioLbs"
@@ -124,24 +132,20 @@
 
         </RadioGroup>
 
-        <!-- ========================================= -->
-        <!-- Giao diện -->
-        <!-- ========================================= -->
-
-        <View
+        <!-- GIAO DIỆN -->
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="28dp"
-            android:background="@color/app_secondary_text" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Giao diện"
+            android:textColor="@color/app_text"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchDarkMode"
@@ -151,70 +155,55 @@
             android:text="Chế độ tối"
             android:textSize="16sp" />
 
-        <!-- ========================================= -->
-        <!-- Nhắc cân nặng -->
-        <!-- ========================================= -->
+        <!-- NHẮC CÂN NẶNG -->
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Nhắc ghi nhận cân nặng"
+            android:textColor="@color/app_text"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:text="Ứng dụng sẽ gửi thông báo mỗi ngày vào thời gian bạn chọn."
-            android:textSize="14sp"
-            android:textColor="@color/app_secondary_text" />
+            android:textColor="@color/app_secondary_text"
+            android:textSize="14sp" />
 
-        <!-- ========================================= -->
-        <!-- Chọn giờ -->
-        <!-- ========================================= -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Giờ nhắc"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/app_text" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReminderTime"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="07:00" />
-
-        <!-- ========================================= -->
-        <!-- Bật / tắt nhắc nhở -->
-        <!-- ========================================= -->
+            android:layout_marginTop="12dp"
+            android:text="07:00"
+            app:icon="@android:drawable/ic_menu_recent_history" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchReminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:text="Bật nhắc nhở hàng ngày"
             android:textSize="16sp" />
 
-        <!-- ========================================= -->
-        <!-- Lưu cài đặt -->
-        <!-- ========================================= -->
-
-        <Button
+        <!-- LƯU CÀI ĐẶT -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Lưu cài đặt" />
+            android:text="Lưu cài đặt"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
